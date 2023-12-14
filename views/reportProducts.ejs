@@ -1,0 +1,96 @@
+<!-- // student Name     - student number
+// -------------------------------------
+// Ashish Neupane   - 8897734
+// Nandipati Vamsi  - 8922647
+// Bipin Gurung     - 8899022 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("layouts/header") %>
+  <body class="container mt-5">
+    <%- include("layouts/fontbutton") %>
+    <h1 class="text-center">Products List</h1>
+
+    <div class="d-flex flex-column">
+      <div class="radio-buttons mt-4">
+        <!-- Add a button to trigger PDF generation -->
+        <a
+          href="/generate-pdf/<%= data?.[0].machine_id %>"
+          class="btn btn-primary"
+          >Generate PDF</a
+        >
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <th>Manufacturing Date</th>
+              <th>Expiry Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Loop through the data and create a row for each product -->
+            <% data.forEach(product => { %>
+            <tr>
+              <td><%= product.product_name %></td>
+              <td><%= product.category %></td>
+              <td><%= product.quantity %></td>
+              <td><%= product.mfg_date.toISOString().split('T')[0] %></td>
+              <td><%= product.expiry_date.toISOString().split('T')[0] %></td>
+              <td>
+                <form method="POST" action="/edit-btn">
+                  <input
+                    type="hidden"
+                    name="productId"
+                    value="<%= product.product_id %>"
+                  />
+                  <input
+                    type="hidden"
+                    name="machineId"
+                    value="<%= product.machine_id %>"
+                  />
+                  <input
+                    type="hidden"
+                    name="productName"
+                    value="<%= product.product_name %>"
+                  />
+                  <input
+                    type="hidden"
+                    name="category"
+                    value="<%= product.category %>"
+                  />
+
+                  <button class="btn">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </form>
+              </td>
+              <td>
+                <button
+                  class="btn delete-btn"
+                  data-product-id="<%= product.product_id %>"
+                  data-machine-id="<%= product.machine_id %>"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="ex1" class="modal">
+      <p>Thanks for clicking. That felt good.</p>
+      <a href="#" rel="modal:close">Close</a>
+    </div>
+
+    <%- include("layouts/footer"); %>
+    <!-- script include -->
+    <%- include("layouts/script") %>
+  </body>
+</html>

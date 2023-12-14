@@ -1,0 +1,90 @@
+<!-- // student Name     - student number
+// -------------------------------------
+// Ashish Neupane   - 8897734
+// Nandipati Vamsi  - 8922647
+// Bipin Gurung     - 8899022 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("layouts/header") %>
+  <body class="container mt-5">
+    <%- include("layouts/fontbutton") %>
+    <div class="d-flex flex-column">
+      <div class="radio-buttons mt-4 justify-content-end">
+        <!-- Add a button to trigger PDF generation -->
+        <a
+          target="_blank"
+          href="/products-report/<%= data?.[0].machine_id %>"
+          class="btn btn-primary float-right"
+          >View Product List</a
+        >
+      </div>
+
+      <form method="POST" action="/confirm-order">
+        <h1 class="text-center mt-5">Select products from Vending Machine</h1>
+        <div class="d-flex gap-3">
+          <input
+            style="display: none"
+            name="machineId"
+            value="<%= data?.[0].machine_id %>"
+          />
+          <!-- Loop through your data to create stylish checkboxes for each product -->
+          <% data.forEach(product => { %>
+          <div class="custom-control custom-checkbox mb-3 mt-3">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              name="selectedProduct"
+              value="<%= product.product_id %>"
+              id="<%= 'checkbox_' + product.product_id %>"
+            />
+            <label
+              class="custom-control-label"
+              for="<%= 'checkbox_' + product.product_id %>"
+            >
+              <div class="checkbox-box">
+                <p class="fw-bolder"><%= product.product_name %></p>
+                Quantity: <%= product.quantity %>
+                <p class="tags"><%= product.category %></p>
+              </div>
+            </label>
+          </div>
+          <% }); %>
+        </div>
+
+        <div class="form-group my-3">
+          <label for="customerName" class="form-label">Select a Customer</label>
+
+          <select class="form-control" id="customerId" name="customerId">
+            <% customerList.forEach(customer => { %>
+            <option value="<%= customer.customer_id %>">
+              <%= customer.customer_name %>
+            </option>
+            <% }); %>
+          </select>
+        </div>
+
+        <!-- Payment Mode -->
+        <div class="form-group my-3">
+          <label for="paymentMode" class="form-label"
+            >Select a Payment Mode</label
+          >
+          <select class="form-control" id="paymentMode" name="paymentMode">
+            <option value="10">Cash</option>
+            <option value="11">Student Card</option>
+            <option value="12">Credit Card</option>
+          </select>
+        </div>
+
+        <!-- Add a submit button or other form elements as needed -->
+        <button type="submit" class="btn btn-submit w-100">
+          Confirm Order
+        </button>
+      </form>
+    </div>
+
+    <%- include("layouts/footer"); %>
+    <!-- script include -->
+    <%- include("layouts/script") %>
+  </body>
+</html>

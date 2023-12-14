@@ -1,0 +1,55 @@
+<!-- // student Name     - student number
+// -------------------------------------
+// Ashish Neupane   - 8897734
+// Nandipati Vamsi  - 8922647
+// Bipin Gurung     - 8899022 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("layouts/header") %>
+  <body class="container mt-5">
+    <%- include("layouts/fontbutton") %>
+    <h1 class="text-center">Select a Vending Machine</h1>
+    <% if (errorMsg) {%>
+    <p class="text-danger"><%= errorMsg %></p>
+    <% }%>
+    <form method="post" action="/vending-machine">
+      <div class="d-flex flex-column">
+        <div class="radio-buttons mt-4">
+          <% data.forEach(machine => { %>
+          <label class="custom-radio">
+            <p
+              class="tags <%= machine.machine_status === 'ACTIVE' ? 'active' : 'disactive' %>"
+            >
+              <%= machine.machine_status %>
+            </p>
+
+            <input type="radio" name="selectedMachine" value="<%=
+            machine.machine_id %>" <%= machine.machine_status === 'INACTIVE' ?
+            'disabled' : '' %> />
+            <span class="radio-btn"
+              ><i class="las la-check"></i>
+              <div class="vending-icon">
+                <img src="/assets/img/vending-machine.png" />
+                <h3 class=""><%= machine.machine_type %></h3>
+                <p class="text-secondary">@<%= machine.machine_location %></p>
+              </div>
+            </span>
+          </label>
+          <% }); %>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-submit mt-4 w-50 text-center align-self-center"
+        >
+          Select
+        </button>
+      </div>
+    </form>
+
+    <%- include("layouts/footer"); %>
+    <!-- script include -->
+    <%- include("layouts/script") %>
+  </body>
+</html>

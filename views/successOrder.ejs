@@ -1,0 +1,37 @@
+<!-- // student Name     - student number
+// -------------------------------------
+// Ashish Neupane   - 8897734
+// Nandipati Vamsi  - 8922647
+// Bipin Gurung     - 8899022 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("layouts/header") %> <%- include("layouts/fontbutton") %>
+  <body
+    class="container mt-5 d-flex justify-content-center align-items-center h-100 flex-column"
+  >
+    <img
+      src="/assets/img/success-image.jpg"
+      style="width: 400px; height: 400px"
+    />
+    <h1 class="text-center">Order Placed Successfully</h1>
+
+    <form method="POST" action="/generate-invoice">
+      <!-- Hidden input fields for machineId and customerId -->
+      <input type="hidden" name="machineId" value="<%= machineId %>" />
+      <input type="hidden" name="customerId" value="<%= customerId %>" />
+      <input type="hidden" name="totalPrice" value="<%= totalPrice %>" />
+      <input type="hidden" name="totalTax" value="<%= totalTax %>" />
+      <button class="mt-4 btn btn-submit" type="submit">
+        <i class="fa-regular fa-file-pdf fa-xl"></i>
+        Download Invoice
+      </button>
+    </form>
+    <p class="text-secondary fw-500 fs-4 mt-4">
+      <a href="/"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+    </p>
+    <%- include("layouts/footer"); %>
+    <!-- script include -->
+    <%- include("layouts/script") %>
+  </body>
+</html>
